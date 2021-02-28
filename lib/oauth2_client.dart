@@ -54,13 +54,13 @@ class OAuth2Client {
 
   /// Requests an Access Token to the OAuth2 endpoint using the Implicit grant flow (https://tools.ietf.org/html/rfc6749#page-31)
   Future<AccessTokenResponse> getTokenWithImplicitGrantFlow({
-    @required String clientId,
-    List<String> scopes,
-    bool enableState = true,
-    String state,
-    httpClient,
-    webAuthClient,
-  }) async {
+      @required String clientId,
+      List<String> scopes,
+      bool enableState = true,
+      String state,
+      httpClient,
+      webAuthClient,
+      Map<String, dynamic> customParams}) async {
     httpClient ??= http.Client();
     webAuthClient ??= this.webAuthClient;
 
@@ -72,7 +72,8 @@ class OAuth2Client {
         scopes: scopes,
         enableState: enableState,
         state: state,
-        redirectUri: redirectUri);
+        redirectUri: redirectUri,
+        customParams: customParams);
 
     // Present the dialog to the user
     final result = await webAuthClient.authenticate(
